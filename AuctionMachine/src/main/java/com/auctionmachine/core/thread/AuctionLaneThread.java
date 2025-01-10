@@ -22,6 +22,7 @@ public class AuctionLaneThread extends Thread{
 		this.auctionLane = auctionLane;
 	}
 	
+
 	@Override
 	public void run() {
 		this.auctionItemLoop();
