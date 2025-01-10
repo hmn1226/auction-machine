@@ -8,6 +8,7 @@ import com.auctionmachine.core.ThreadStore;
 import com.auctionmachine.core.thread.AuctionLaneThread;
 import com.auctionmachine.lib.AuctionBidUpDownType;
 import com.auctionmachine.lib.AuctionProcessingType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class AuctionRoom {
 	Date publishStartTime = new Date();
 	Date auctionStartTime = new Date();
 	long auctionTime = 60*60;// 60min
+	@JsonManagedReference
 	Map<Integer,AuctionLane> auctionLaneMap = new HashMap<>();
 	AuctionRoomMonitor auctionRoomMonitor = new AuctionRoomMonitor();
 	

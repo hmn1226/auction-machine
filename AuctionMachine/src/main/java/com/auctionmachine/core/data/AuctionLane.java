@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Random;
 
 import com.auctionmachine.lib.AuctionLaneStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class AuctionLane {
 	
 	//====★★★★★★★★★★★★★★★ WEB SOCKET配信用 簡易Lane Beanをコンストラクタで準備
 	// AuctionLaneと上記Beanを両方更新する場合はsetterに両方更新するように記述する
-	
+	@JsonBackReference
 	AuctionRoom auctionRoom;
 	Integer auctionLaneId;
 	AuctionLaneStatus auctionLaneStatus = AuctionLaneStatus.STOP;
