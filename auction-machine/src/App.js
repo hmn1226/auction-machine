@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BidButton from "./components/BidButton";
+import BidButton from "./components/LiveBidButton";
 import WebSocket from "./components/WebSocket";
 
 function App() {
@@ -7,7 +7,6 @@ function App() {
 
   return (
     <>
-      <BidButton />
       <WebSocket />
     </>
   );
