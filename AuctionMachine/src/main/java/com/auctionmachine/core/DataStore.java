@@ -57,4 +57,5 @@ public class DataStore {
 	public AuctionEntry getAuctionEntry(AuctionEntryKey key) {
 		return getAuctionEntry(key.getAuctionRoomId(),key.getAuctionLaneId(),key.getAuctionEntryId());
 	}
+	
 }
