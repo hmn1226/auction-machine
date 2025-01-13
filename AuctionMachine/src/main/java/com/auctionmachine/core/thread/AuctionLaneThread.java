@@ -3,73 +3,40 @@ package com.auctionmachine.core.thread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.auctionmachine.core.data.AuctionEntry;
 import com.auctionmachine.core.data.AuctionLane;
-import com.auctionmachine.core.data.AuctionRoom;
-import com.auctionmachine.util.BeanUtil;
-import com.auctionmachine.web.socket.controller.ChatMessage;
-import com.auctionmachine.web.socket.service.MessagingService;
+import com.auctionmachine.lib.AuctionLaneStatus;
 
 public class AuctionLaneThread extends Thread{
 	
 	private Logger logger = LoggerFactory.getLogger(super.getClass());
 	
 	private AuctionLane auctionLane;
+	private boolean isDestroy=false;
 	
-	boolean isDestroy=false;
+	private Integer loopInterval = 100;
 	
 	public AuctionLaneThread(AuctionLane auctionLane) {
 		this.auctionLane = auctionLane;
 	}
 	
-
 	@Override
 	public void run() {
-		this.auctionItemLoop();
+		this.auctionLaneLoop();
 	}
 	
-	private void auctionItemLoop(){
-		AuctionEntry auctionItemToCompare = null;
+	private void auctionLaneLoop(){
 		while(!isDestroy) {
 			try {
-				//---
-				AuctionRoom auctionRoom = this.auctionLane.getAuctionRoom();
-				AuctionLane auctionLane = this.auctionLane;
-				AuctionEntry auctionEntry = this.auctionLane.getCurrentAuctionEntry();
-				//---
-				
-				if(auctionEntry==null) continue;
-				auctionItemToCompare = BeanUtil.deepCopy(AuctionEntry.class, auctionEntry);
-				/*
-				logger.info(
-						this.auctionLane.getAuctionRoomId()+"==="+
-						this.auctionLane.getAuctionLaneId()+"==="+
-				"Auction Lane Thread Loop!");
-				*/
-				super.sleep(1000);
-				
-				//---前回ループ時のAuctionItemと内容の変更があった時
-				if(!BeanUtil.equal(auctionEntry,auctionItemToCompare)) {
-					logger.info("変わった");
+				if(this.auctionLane.getAuctionLaneStatus() == AuctionLaneStatus.START) {					
+					auctionLane.resolvePreBids();
+					auctionLane.resolveLiveBids();
 				}
-				
-				MessagingService ms = MessagingService.getInstance();
-				ChatMessage cm = new ChatMessage();
-				cm.setContent(
-						auctionLane.getAuctionLaneStatus() + 
-						auctionEntry.getAuctionEntryName()+"---"+
-						auctionEntry.getCurrentPrice()
-				);
-				ms.sendMessage("/topic/messages/room1" ,cm);
-				
-				//logger.info(auctionItem.getItemName()+"---"+auctionItem.getCurrentPrice());
-
+				super.sleep(this.loopInterval);
 			}catch(Exception e) {
 				logger.error(null,e);
 			}
 		}
 	}
-	
 	public void destroy() {
 		this.isDestroy = true;
 	}

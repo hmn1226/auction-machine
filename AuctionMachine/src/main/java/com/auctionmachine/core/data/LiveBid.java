@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 public class LiveBid {
-	String auctionEntryId;
-	String userId;
-	Instant bidTime;
+	private String auctionEntryId;
+	private String bidUserId;
+	private Instant bidTime;
 	
     @Override
     public String toString() {

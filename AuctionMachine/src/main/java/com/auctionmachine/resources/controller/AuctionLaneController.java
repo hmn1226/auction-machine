@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auctionmachine.resources.model.request.AuctionLaneRequest;
+import com.auctionmachine.resources.model.request.CurrentPriceRequest;
 import com.auctionmachine.resources.model.response.CurrentEntry;
 import com.auctionmachine.resources.model.response.CurrentLane;
 import com.auctionmachine.resources.service.AuctionLaneService;
@@ -16,7 +17,7 @@ import com.auctionmachine.resources.service.AuctionLaneService;
 public class AuctionLaneController {
 
 	@Autowired
-	AuctionLaneService auctionLaneService;
+	private AuctionLaneService auctionLaneService;
 	
 	@PostMapping("/api/auction-lane/{auctionRoomId}/{auctionLaneId}/status")
 	public void status(
@@ -27,6 +28,16 @@ public class AuctionLaneController {
 		auctionLaneRequest.setAuctionRoomId(auctionRoomId);
 		auctionLaneRequest.setAuctionLaneId(auctionLaneId);
 	    this.auctionLaneService.status(auctionLaneRequest);
+	}
+	@PostMapping("/api/auction-lane/{auctionRoomId}/{auctionLaneId}/current-price")
+	public void currentPrice(
+	        @PathVariable("auctionRoomId") String auctionRoomId,
+	        @PathVariable("auctionLaneId") Integer auctionLaneId,
+	        @RequestBody CurrentPriceRequest currentPriceRequest
+	) {
+		currentPriceRequest.setAuctionRoomId(auctionRoomId);
+		currentPriceRequest.setAuctionLaneId(auctionLaneId);
+	    this.auctionLaneService.currentPrice(currentPriceRequest);
 	}
 	@PostMapping("/api/auction-lane/{auctionRoomId}/{auctionLaneId}/next-entry")
 	public void nextEntry(

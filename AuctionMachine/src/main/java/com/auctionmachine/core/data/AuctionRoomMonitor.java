@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class AuctionRoomMonitor {
-	List<AuctionLaneMonitor> auctionLaneMonitors = new ArrayList<>();
+	private List<AuctionLaneMonitor> auctionLaneMonitors = new ArrayList<>();
 	public String toString() {
 		return BeanUtil.describe(this);
 	}

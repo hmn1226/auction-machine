@@ -8,14 +8,16 @@ import lombok.Data;
 @Data
 public class AuctionEntry {
 	
-	String auctionEntryId;
-	String auctionEntryName;
-	Integer currentPrice;
-	String currentHolderUserId;
-	List<PreBid> preBidList = new ArrayList<>();
-	List<LiveBid> bidLogList = new ArrayList<>();
+	private String auctionEntryId;
+	private String auctionEntryName;
+	private Integer currentPrice;
+	private String currentHolderUserId;
+	private List<PreBid> preBidList = new ArrayList<>();
+	private List<LiveBid> bidLogList = new ArrayList<>();
+	private AuctionLane auctionLane;
 	
-	AuctionLane auctionLane;
+	public AuctionEntry(){
+	}
 	public AuctionEntry(AuctionLane auctionLane){
 		this.auctionLane = auctionLane;
 	}

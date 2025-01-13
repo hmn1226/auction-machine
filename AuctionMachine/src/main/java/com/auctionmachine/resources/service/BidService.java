@@ -1,6 +1,7 @@
 package com.auctionmachine.resources.service;
 
 import java.time.Instant;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -13,14 +14,12 @@ import com.auctionmachine.resources.model.request.PreBidRequest;
 
 @Service
 public class BidService {
-
-	DataStore dataStore =  DataStore.getInstance();
-
+	private DataStore dataStore =  DataStore.getInstance();
 	public void preBid(PreBidRequest req) {
 		AuctionLane auctionLane = this.dataStore.getAuctionLane(req);
 		
 		PreBid preBid = new PreBid();
-		preBid.setUserId(req.getUserId());
+		preBid.setBidUserId(req.getUserId());
 		preBid.setAuctionEntryId(req.getAuctionEntryId());
 		preBid.setBidTime(Instant.now());
 		preBid.setBidPrice(req.getPreBidPrice());
@@ -29,11 +28,19 @@ public class BidService {
 	
 	public void liveBid(LiveBidRequest req) {
 		AuctionLane auctionLane = this.dataStore.getAuctionLane(req);
-		
+		if(req.getBidUserId()==null) {
+			req.setBidUserId("ABC"+this.generateFiveDigitNumber());//TODO 仮			
+		}
 		LiveBid liveBid = new LiveBid();
-		liveBid.setUserId(req.getUserId());
+		liveBid.setBidUserId(req.getBidUserId());
 		liveBid.setAuctionEntryId(req.getAuctionEntryId());
 		liveBid.setBidTime(Instant.now());
 		auctionLane.getLiveBidQueue().add(liveBid);
  	}
+	
+	// 5桁のランダムな数字を生成する関数
+    public int generateFiveDigitNumber() {
+        Random random = new Random();
+        return 10000 + random.nextInt(90000); // 10000～99999の範囲
+    }
 }

@@ -8,10 +8,10 @@ import lombok.Data;
 
 @Data
 public class PreBid {
-	String auctionEntryId;
-	String userId;
-	Instant bidTime;
-	Integer bidPrice;
+	private String auctionEntryId;
+	private String bidUserId;
+	private Instant bidTime;
+	private Integer bidPrice;
 	@Override
 	public String toString() {
 		return BeanUtil.describe(this);

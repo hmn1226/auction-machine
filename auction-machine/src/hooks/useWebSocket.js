@@ -6,8 +6,7 @@ const SOCKET_URL = "http://localhost:8080/gs-guide-websocket";
 
 const useWebSocket = (roomId) => {
     const [stompClient, setStompClient] = useState(null);
-    const [messages, setMessages] = useState([]);
-    const [text1,setText1] = useState("");
+    const [wsObj,setWsObj] = useState();
 
     useEffect(() => {
         connectWebSocket();
@@ -19,6 +18,10 @@ const useWebSocket = (roomId) => {
     
         const socket = new SockJS(SOCKET_URL);
         const stomp = Stomp.over(socket);
+
+        // デバッグログを無効化
+        stomp.debug = () => {};
+
     
         // 接続時にroomIdを渡す
         stomp.connect({ roomId }, () => {
@@ -40,10 +43,9 @@ const useWebSocket = (roomId) => {
     };
     
     const onMessageReceived = (message) => {
-        const newMessage = JSON.parse(message.body);
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-        console.log(newMessage.content);
-        setText1(newMessage.content);
+        const obj = JSON.parse(message.body);
+        let wsObj = JSON.parse(obj.content);
+        setWsObj(wsObj);
     };
     
     const sendMessage = () => {
@@ -59,8 +61,7 @@ const useWebSocket = (roomId) => {
     };
 
     return {
-        messages,
-        text1,
+        wsObj,
         sendMessage
     }
 }

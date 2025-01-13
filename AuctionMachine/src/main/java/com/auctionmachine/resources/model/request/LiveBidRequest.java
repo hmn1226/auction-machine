@@ -11,7 +11,7 @@ public class LiveBidRequest implements AuctionLaneKey,AuctionEntryKey{
 	private String auctionRoomId;
 	private Integer auctionLaneId;
 	private String auctionEntryId;
-    private String userId;
+    private String bidUserId;
 
     @Override
     public String toString() {

@@ -7,17 +7,22 @@ import com.auctionmachine.core.data.AuctionEntry;
 import com.auctionmachine.core.data.AuctionLane;
 import com.auctionmachine.core.data.LiveBid;
 import com.auctionmachine.resources.model.request.AuctionLaneRequest;
+import com.auctionmachine.resources.model.request.CurrentPriceRequest;
 import com.auctionmachine.resources.model.response.CurrentEntry;
 import com.auctionmachine.resources.model.response.CurrentLane;
 
 @Service
 public class AuctionLaneService {
 	
-	DataStore dataStore = DataStore.getInstance();
+	private DataStore dataStore = DataStore.getInstance();
 
 	public void status(AuctionLaneRequest request) {
 		AuctionLane auctionLane = this.dataStore.getAuctionLane(request);
 		auctionLane.setAuctionLaneStatus(request.getAuctionLaneStatus());
+	}
+	public void currentPrice(CurrentPriceRequest request) {
+		AuctionLane auctionLane = this.dataStore.getAuctionLane(request);
+		auctionLane.setCurrentPrice(request.getCurrentPrice());
 	}
 	public void nextEntry(AuctionLaneRequest request) {
 		AuctionLane auctionLane = this.dataStore.getAuctionLane(request);

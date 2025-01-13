@@ -28,7 +28,7 @@ public class PrepareTestData {
 					pb.setAuctionEntryId("1");
 					pb.setBidPrice(12000);
 					pb.setBidTime(Instant.now());
-					pb.setUserId("ABC12000");
+					pb.setBidUserId("ABC12000");
 					auctionEntry.getPreBidList().add(pb);
 				}
 				{
@@ -36,7 +36,7 @@ public class PrepareTestData {
 					pb.setAuctionEntryId("1");
 					pb.setBidPrice(24000);
 					pb.setBidTime(Instant.now());
-					pb.setUserId("ABC24000");
+					pb.setBidUserId("ABC24000");
 					auctionEntry.getPreBidList().add(pb);
 				}
 				{
@@ -44,7 +44,7 @@ public class PrepareTestData {
 					pb.setAuctionEntryId("1");
 					pb.setBidPrice(4000);
 					pb.setBidTime(Instant.now());
-					pb.setUserId("ABC4000");
+					pb.setBidUserId("ABC4000");
 					auctionEntry.getPreBidList().add(pb);
 				}
 				{
@@ -52,7 +52,7 @@ public class PrepareTestData {
 					pb.setAuctionEntryId("1");
 					pb.setBidPrice(16000);
 					pb.setBidTime(Instant.now());
-					pb.setUserId("ABC16000");
+					pb.setBidUserId("ABC16000");
 					auctionEntry.getPreBidList().add(pb);
 				}
 				
@@ -71,8 +71,8 @@ public class PrepareTestData {
 				auctionEntry.setCurrentPrice(30000);
 				auctionLane.getAuctionEntryMap().put("3",auctionEntry);
 			}
+			auctionLane.displayMonitor();
 		}
-		
 		//===================================================
 		
 		
